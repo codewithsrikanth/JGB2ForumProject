@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Implementation\AnswersRepository.cs" />
     <Compile Include="Implementation\CategoryRepository.cs" />
     <Compile Include="Implementation\QuestionRepository.cs" />
     <Compile Include="Implementation\VotesRepository.cs" />
