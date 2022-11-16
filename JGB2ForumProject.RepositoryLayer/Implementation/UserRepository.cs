@@ -21,7 +21,8 @@ namespace JGB2ForumProject.RepositoryLayer
 
         public int GetLatestUserID()
         {
-            throw new System.NotImplementedException();
+            int uid = db.Users.Select(x => x.UserID).Max();
+            return uid;
         }
 
         public User GetUserByEmail(string email)

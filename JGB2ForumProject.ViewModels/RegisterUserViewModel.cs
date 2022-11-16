@@ -2,7 +2,7 @@
 
 namespace JGB2ForumProject.ViewModels
 {
-    public class RegisterViewModel
+    public class RegisterUserViewModel
     {
         [Required]
         [EmailAddress]
