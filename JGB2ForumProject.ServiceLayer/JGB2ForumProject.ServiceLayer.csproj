@@ -58,7 +58,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Implementations\AnswersService.cs" />
+    <Compile Include="Implementations\CategoriesService.cs" />
+    <Compile Include="Implementations\QuestionsService.cs" />
     <Compile Include="Implementations\UserService.cs" />
+    <Compile Include="Interfaces\IAnswersService.cs" />
+    <Compile Include="Interfaces\ICategoriesService.cs" />
+    <Compile Include="Interfaces\IQuestionsService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="MapperExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

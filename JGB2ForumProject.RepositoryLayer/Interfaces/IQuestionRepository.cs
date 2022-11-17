@@ -9,7 +9,7 @@ namespace JGB2ForumProject.RepositoryLayer.Implementation
         void UpdateQuestionDetails(Question q);
         void UpdateQuestionVotesCount(int qid, int votecount);
         void UpdateQuestionAnswersCount(int qid, int answercount);
-        void UpdateQuestionViewsCount(int qid);
+        void UpdateQuestionViewsCount(int qid,int value);
         void DeleteQuestion(int qid);
         List<Question> GetAllQuestions();
         Question GetQuestionBasedonQuestionID(int qid);

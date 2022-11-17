@@ -10,46 +10,24 @@ namespace JGB2ForumProject.ServiceLayer.Implementations
     public class UserService : IUserService
     {
         IUserRepository ur;
+
         public UserService()
         {
             ur = new UserRepository();
         }
 
-        public void DeleteUser(int uid)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public List<UserViewModel> GetAllUsers()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public UserViewModel GetUserByUserID(int uid)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public UserViewModel GetUsersByEmail(string email)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public UserViewModel GetUsersByEmailAndPassword(string email, string password)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public int InsertUser(RegisterUserViewModel uvm)
         {
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<RegisterUserViewModel, User>();
-                cfg.IgnoreUnmapped();
-            });
-            IMapper mapper = config.CreateMapper();
-            User u = mapper.Map<RegisterUserViewModel, User>(uvm);
+            //var config = new MapperConfiguration(cfg => { 
+            //    cfg.CreateMap<RegisterViewModel, User>(); 
+            //    cfg.IgnoreUnmapped(); } );
+            //IMapper mapper = config.CreateMapper();
+            //User u = mapper.Map<RegisterViewModel, User>(uvm);
+            User u = new User();
+            u.Email = uvm.Email;
             u.PasswordHash = SHA256HashGenerator.GenerateHash(uvm.Password);
+            u.Name = uvm.Name;
+            u.Mobile = uvm.Mobile;
             ur.InsertUser(u);
             int uid = ur.GetLatestUserID();
             return uid;
@@ -57,12 +35,72 @@ namespace JGB2ForumProject.ServiceLayer.Implementations
 
         public void UpdateUserDetails(EditUserDetailsViewModel uvm)
         {
-            throw new System.NotImplementedException();
+            var config = new MapperConfiguration(cfg => { cfg.CreateMap<EditUserDetailsViewModel, User>(); cfg.IgnoreUnmapped(); });
+            IMapper mapper = config.CreateMapper();
+            User u = mapper.Map<EditUserDetailsViewModel, User>(uvm);
+            ur.UpdateUserDetails(u);
         }
 
         public void UpdateUserPassword(EditUserPasswordViewModel uvm)
         {
-            throw new System.NotImplementedException();
+            var config = new MapperConfiguration(cfg => { cfg.CreateMap<EditUserPasswordViewModel, User>(); cfg.IgnoreUnmapped(); });
+            IMapper mapper = config.CreateMapper();
+            User u = mapper.Map<EditUserPasswordViewModel, User>(uvm);
+            u.PasswordHash = SHA256HashGenerator.GenerateHash(uvm.Password);
+            ur.UpdateUserPassword(u);
+        }
+
+        public void DeleteUser(int uid)
+        {
+            ur.DeleteUser(uid);
+        }
+
+        public List<UserViewModel> GetAllUsers()
+        {
+            List<User> u = ur.GetUsers();
+            var config = new MapperConfiguration(cfg => { cfg.CreateMap<User, UserViewModel>(); cfg.IgnoreUnmapped(); });
+            IMapper mapper = config.CreateMapper();
+            List<UserViewModel> uvm = mapper.Map<List<User>, List<UserViewModel>>(u);
+            return uvm;
+        }
+
+        public UserViewModel GetUsersByEmailAndPassword(string Email, string Password)
+        {
+            User u = ur.GetUserByEmailAndPassword(Email, SHA256HashGenerator.GenerateHash(Password));
+            UserViewModel uvm = null;
+            if (u != null)
+            {
+                var config = new MapperConfiguration(cfg => { cfg.CreateMap<User, UserViewModel>(); cfg.IgnoreUnmapped(); });
+                IMapper mapper = config.CreateMapper();
+                uvm = mapper.Map<User, UserViewModel>(u);
+            }
+            return uvm;
+        }
+
+        public UserViewModel GetUsersByEmail(string Email)
+        {
+            User u = ur.GetUserByEmail(Email);
+            UserViewModel uvm = null;
+            if (u != null)
+            {
+                var config = new MapperConfiguration(cfg => { cfg.CreateMap<User, UserViewModel>(); cfg.IgnoreUnmapped(); });
+                IMapper mapper = config.CreateMapper();
+                uvm = mapper.Map<User, UserViewModel>(u);
+            }
+            return uvm;
+        }
+
+        public UserViewModel GetUserByUserID(int UserID)
+        {
+            User u = ur.GetUserByUserID(UserID);
+            UserViewModel uvm = null;
+            if (u != null)
+            {
+                var config = new MapperConfiguration(cfg => { cfg.CreateMap<User, UserViewModel>(); cfg.IgnoreUnmapped(); });
+                IMapper mapper = config.CreateMapper();
+                uvm = mapper.Map<User, UserViewModel>(u);
+            }
+            return uvm;
         }
     }
 }

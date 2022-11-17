@@ -51,7 +51,7 @@ namespace JGB2ForumProject.RepositoryLayer.Implementation
             _dbContext.SaveChanges();
         }
 
-        public void UpdateQuestionViewsCount(int qid)
+        public void UpdateQuestionViewsCount(int qid,int value)
         {
             Question question = _dbContext.Questions.Find(qid);
             if (question != null)
